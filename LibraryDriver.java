@@ -2,74 +2,74 @@ import java.io.*;
 
 public class LibraryDriver {
 
-    // серіалізація
-    // ObjectOutputStream це потік який перетворює об'єкт в байти і записує у файл
+    // serialization
+    // ObjectOutputStream converts an object into bytes and writes it to a file
     public static void serialize(Library library, String filename) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(library);
-            System.out.println("Бібліотеку збережено у файл: " + filename);
+            System.out.println("Library saved to file: " + filename);
         } catch (IOException e) {
-            System.out.println("Помилка серіалізації: " + e.getMessage());
+            System.out.println("Serialization error: " + e.getMessage());
         }
     }
 
-    // десеріалізація
-    // ObjectInputStream зворотній процес, читає байти з файлу і відновлює об'єкт
+    // deserialization
+    // ObjectInputStream is the reverse process: reads bytes from a file and restores the object
     public static Library deserialize(String filename) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-            Library library = (Library) ois.readObject(); // (Library) — це каст, бо readObject повертає Object
-            System.out.println("Бібліотеку відновлено з файлу: " + filename);
+            Library library = (Library) ois.readObject(); // cast, since readObject returns Object
+            System.out.println("Library restored from file: " + filename);
             return library;
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Помилка десеріалізації: " + e.getMessage());
+            System.out.println("Deserialization error: " + e.getMessage());
             return null;
         }
     }
 
     public static void main(String[] args) {
 
-        Author shevchenko = new Author("Тарас", "Шевченко");
-        Author franko = new Author("Іван", "Франко");
-        Author lesia = new Author("Леся", "Українка");
+        Author shevchenko = new Author("Taras", "Shevchenko");
+        Author franko = new Author("Ivan", "Franko");
+        Author lesia = new Author("Lesia", "Ukrainka");
 
-        Book kobzar = new Book("Кобзар", new java.util.ArrayList<>(), 1840, 1);
+        Book kobzar = new Book("Kobzar", new java.util.ArrayList<>(), 1840, 1);
         kobzar.addAuthor(shevchenko);
 
-        Book lisovaPisnia = new Book("Лісова пісня", new java.util.ArrayList<>(), 1911, 2);
+        Book lisovaPisnia = new Book("Forest Song", new java.util.ArrayList<>(), 1911, 2);
         lisovaPisnia.addAuthor(lesia);
 
-        Book zakhar = new Book("Захар Беркут", new java.util.ArrayList<>(), 1883, 3);
+        Book zakhar = new Book("Zakhar Berkut", new java.util.ArrayList<>(), 1883, 3);
         zakhar.addAuthor(franko);
 
-        Reader reader1 = new Reader("Олег", "Коваль", 1);
-        Reader reader2 = new Reader("Марія", "Бондар", 2);
+        Reader reader1 = new Reader("Oleh", "Koval", 1);
+        Reader reader2 = new Reader("Maria", "Bondar", 2);
 
-        Library library = new Library("Національна бібліотека");
+        Library library = new Library("National Library");
         library.addBook(kobzar);
         library.addBook(lisovaPisnia);
         library.addBook(zakhar);
         library.registerReader(reader1);
         library.registerReader(reader2);
 
-        System.out.println("=== СТАН ДО ВИДАЧІ КНИГ ===");
+        System.out.println("=== STATE BEFORE ISSUING BOOKS ===");
         System.out.println(library);
 
-        System.out.println("\n=== ВИДАЧА КНИГ ===");
+        System.out.println("\n=== ISSUING BOOKS ===");
         library.issueBook(reader1, kobzar);
         library.issueBook(reader2, lisovaPisnia);
 
-        System.out.println("\n=== СТАН ПІСЛЯ ВИДАЧІ КНИГ ===");
+        System.out.println("\n=== STATE AFTER ISSUING BOOKS ===");
         System.out.println(library);
 
-        // Серіалізуємо - зберігаємо у файл
-        System.out.println("\n=== СЕРІАЛІЗАЦІЯ ===");
+        // Serialize - save to file
+        System.out.println("\n=== SERIALIZATION ===");
         serialize(library, "library.ser");
 
-        // Десеріалізуємо - відновлюємо з файлу
-        System.out.println("\n=== ДЕСЕРІАЛІЗАЦІЯ ===");
+        // Deserialize - restore from file
+        System.out.println("\n=== DESERIALIZATION ===");
         Library restoredLibrary = deserialize("library.ser");
 
-        System.out.println("\n=== СТАН ПІСЛЯ ДЕСЕРІАЛІЗАЦІЇ ===");
+        System.out.println("\n=== STATE AFTER DESERIALIZATION ===");
         System.out.println(restoredLibrary);
     }
 }

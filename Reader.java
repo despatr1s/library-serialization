@@ -10,8 +10,8 @@ public class Reader implements Serializable {
     private int registrationNumber;
     private ArrayList<Book> borrowedBooks;
 
-    // Конструктор за замовчуванням - ініціалізуємо список одразу
-    // щоб borrowBook() не кинув NullPointerException
+    // Default constructor - initialize the list right away
+    // so borrowBook() doesn't throw a NullPointerException
     public Reader() {
         this.borrowedBooks = new ArrayList<>();
     }
@@ -33,20 +33,20 @@ public class Reader implements Serializable {
     public void setRegistrationNumber(int registrationNumber) { this.registrationNumber = registrationNumber; }
     public void setBorrowedBooks(ArrayList<Book> borrowedBooks) { this.borrowedBooks = borrowedBooks; }
 
-    // Метод видачі книги читачу
+    // Issues a book to the reader
     public void borrowBook(Book book) {
         borrowedBooks.add(book);
     }
 
     @Override
     public String toString() {
-        // Якщо книг немає - виводимо "немає книг"
+        // If there are no books - print "no books"
         String booksStr = borrowedBooks.isEmpty()
-                ? "немає книг"
+                ? "no books"
                 : borrowedBooks.stream()
                 .map(Book::toString)
                 .collect(Collectors.joining("\n         "));
-        return "Читач #" + registrationNumber + ": " + firstName + " " + lastName + "\n" +
-                "   Книги: " + booksStr;
+        return "Reader #" + registrationNumber + ": " + firstName + " " + lastName + "\n" +
+                "   Books: " + booksStr;
     }
 }

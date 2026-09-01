@@ -36,33 +36,33 @@ public class Library implements Serializable {
         readers.add(reader);
     }
 
-    // Видає книгу читачу: прибирає з бібліотеки, додає читачу
+    // Issues a book to a reader: removes it from the library, adds it to the reader
     public void issueBook(Reader reader, Book book) {
         if (books.contains(book)) {
             books.remove(book);
             reader.borrowBook(book);
-            System.out.println("Книгу " + book.getTitle() + " видано читачу " + reader.getFirstName());
+            System.out.println("Book " + book.getTitle() + " issued to reader " + reader.getFirstName());
         } else {
-            System.out.println("Книга " + book.getTitle() + " недоступна у бібліотеці");
+            System.out.println("Book " + book.getTitle() + " is not available in the library");
         }
     }
 
     @Override
     public String toString() {
         String booksStr = books.isEmpty()
-                ? "немає книг"
+                ? "no books"
                 : books.stream()
                 .map(Book::toString)
                 .collect(Collectors.joining("\n   "));
 
         String readersStr = readers.isEmpty()
-                ? "немає читачів"
+                ? "no readers"
                 : readers.stream()
                 .map(Reader::toString)
                 .collect(Collectors.joining("\n   "));
 
-        return "=== Бібліотека: " + name + " ===\n" +
-                "Книги:\n   " + booksStr + "\n" +
-                "Читачі:\n   " + readersStr;
+        return "=== Library: " + name + " ===\n" +
+                "Books:\n   " + booksStr + "\n" +
+                "Readers:\n   " + readersStr;
     }
 }

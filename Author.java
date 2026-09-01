@@ -6,7 +6,7 @@ public class Author implements Serializable {
     private String firstName;
     private String lastName;
 
-    // Конструктор за замовчуванням потрібен для десеріалізації
+    // Default constructor is required for deserialization
     public Author() {}
 
     public Author(String firstName, String lastName) {

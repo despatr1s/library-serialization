@@ -9,11 +9,11 @@ public class Book implements Serializable {
     private int year;
     private int edition;
 
-    // конструктор за замовчуванням
+    // default constructor
     public Book() {
         this.authors = new ArrayList<>();
-        // одразу ініціалізуємо, щоб не отримати NullPointerException
-        // при виклику addAuthor() на щойно створеному об'єкті.
+        // initialize right away to avoid a NullPointerException
+        // when calling addAuthor() on a freshly created object.
     }
 
     public Book(String title, ArrayList<Author> authors, int year, int edition) {
@@ -41,6 +41,6 @@ public class Book implements Serializable {
         String authorsStr = authors.stream()
                 .map(Author::toString)
                 .collect(java.util.stream.Collectors.joining(", "));
-        return "\"" + title + "\" (" + year + ", вид." + edition + ") — " + authorsStr;
+        return "\"" + title + "\" (" + year + ", ed." + edition + ") - " + authorsStr;
     }
 }
